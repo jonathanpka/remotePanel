@@ -1,0 +1,408 @@
+\hypertarget{remotePanel_8ino}{\section{remote\-Panel.\-ino \-File \-Reference}
+\label{remotePanel_8ino}\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}}
+}
+
+
+\-Sketch for the \-Compressed \-Air \-Rocket \-Remote \-Panel.  
+
+
+{\ttfamily \#include $<$\-Arduino.\-h$>$}\*
+{\ttfamily \#include $<$stdint.\-h$>$}\*
+{\ttfamily \#include $<$\-Wire.\-h$>$}\*
+{\ttfamily \#include $<$\-X\-Bee.\-h$>$}\*
+{\ttfamily \#include $<$\-Launch\-Data\-Packet.\-h$>$}\*
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{remotePanel_8ino_a56e638ac4be5080bc22d2b94fb645c7e}{\-\_\-\-Arm\-Led\-Bit\-Mode\-\_\-}~2
+\begin{DoxyCompactList}\small\item\em \-Define the \-Digital \-Pin \# for the \-Arm \-Switch \-L\-E\-D. \end{DoxyCompactList}\item 
+\#define \hyperlink{remotePanel_8ino_ace3d99afc4b0ef3e41ab1238949d7f07}{\-\_\-\-Arm\-Led\-Port\-\_\-}~\-P\-O\-R\-T\-D
+\begin{DoxyCompactList}\small\item\em \-Define the \-Digital \-Port the \-Arm \-Switch \-L\-E\-D is connected to. \end{DoxyCompactList}\item 
+\#define \hyperlink{remotePanel_8ino_abeac387ee946b831a2d5f3ea8efa2cd6}{\-\_\-\-Arm\-Led\-Bit\-\_\-}~2
+\begin{DoxyCompactList}\small\item\em \-Define the \-Port \-Bit \# for the \-Arm \-Switch \-L\-E\-D. \end{DoxyCompactList}\item 
+\#define \hyperlink{remotePanel_8ino_a5f2f9a4205afa54acd635b5699e141b5}{\-\_\-\-Arm\-Switch\-Bit\-Mode\-\_\-}~4
+\begin{DoxyCompactList}\small\item\em \-Define the \-Digital \-Input \# for the \-Arm \-Switch. \end{DoxyCompactList}\item 
+\#define \hyperlink{remotePanel_8ino_a0e6aa72e91800dc38319f04a2c81f073}{\-\_\-\-Arm\-Switch\-Port\-\_\-}~\-P\-O\-R\-T\-D
+\begin{DoxyCompactList}\small\item\em \-Define the \-Digital \-Port the \-Arm \-Switch is connected to. \end{DoxyCompactList}\item 
+\#define \hyperlink{remotePanel_8ino_aceced00e366c0b2de5b1f6a45e857af2}{\-\_\-\-Arm\-Switch\-Bit\-\_\-}~4
+\begin{DoxyCompactList}\small\item\em \-Define the \-Port \-Bit \# for the \-Arm \-Switch \-In \-Port \-D, the \-Port \-Bit \# is equal to the \-Digital \-Pin \#. \end{DoxyCompactList}\item 
+\#define \hyperlink{remotePanel_8ino_adb250c5295e5075c2a2ba25ff9ea5f57}{\-\_\-\-Launch\-Button\-Bit\-Mode\-\_\-}~5
+\begin{DoxyCompactList}\small\item\em \-Define the \-Digital \-Input \# for the \-Launch \-Button. \end{DoxyCompactList}\item 
+\#define \hyperlink{remotePanel_8ino_aa27235b645c2cb89f868e08287f54dc6}{\-\_\-\-Launch\-Button\-Port\-\_\-}~\-P\-O\-R\-T\-D
+\item 
+\#define \hyperlink{remotePanel_8ino_a7790df90c3031037ccd5b55d84e32858}{\-\_\-\-Launch\-Button\-Bit\-\_\-}~5
+\begin{DoxyCompactList}\small\item\em \-Define the \-Port \-Bit \# for the \-Launch \-Button. \end{DoxyCompactList}\item 
+\#define \hyperlink{remotePanel_8ino_a834965132d8d0a67717adec607303b13}{\-\_\-\-Launch\-Led\-Bit\-Mode\-\_\-}~3
+\begin{DoxyCompactList}\small\item\em \-Define the \-Digital \-Output \# for the \-Launch \-Button \-L\-E\-D. \end{DoxyCompactList}\item 
+\#define \hyperlink{remotePanel_8ino_a2ebaf073a30ca8e1bd042ab46eb35cb4}{\-\_\-\-Launch\-Led\-Port\-\_\-}~\-P\-O\-R\-T\-D
+\begin{DoxyCompactList}\small\item\em \-Define the \-Digital \-Port the \-Launch \-Button \-L\-E\-D is connected to. \end{DoxyCompactList}\item 
+\#define \hyperlink{remotePanel_8ino_a556344e1154b17e67f5c8a40e022be29}{\-\_\-\-Launch\-Led\-Bit\-\_\-}~3
+\begin{DoxyCompactList}\small\item\em \-Define the \-Port \-Bit \# for the \-Launch \-Button \-L\-E\-D. \end{DoxyCompactList}\item 
+\#define \hyperlink{remotePanel_8ino_afff5f53ef0f1c562a5dce2243aef6c53}{\-\_\-\-Error\-Led\-Bit\-Mode\-\_\-}~6
+\begin{DoxyCompactList}\small\item\em \-Define the \-Digital \-Input \# for the \-Error \-L\-E\-D. \end{DoxyCompactList}\item 
+\#define \hyperlink{remotePanel_8ino_affac57d4321e3e0a2ffd81bce3d8ac87}{\-\_\-\-Error\-Led\-Port\-\_\-}~\-P\-O\-R\-T\-D
+\begin{DoxyCompactList}\small\item\em \-Define the \-Digital \-Port the \-Error \-L\-E\-D is connected to. \end{DoxyCompactList}\item 
+\#define \hyperlink{remotePanel_8ino_a5504a284db73f254a1d5871844f6987c}{\-\_\-\-Error\-Led\-Bit\-\_\-}~6
+\begin{DoxyCompactList}\small\item\em \-Define the \-Port \-Bit \# for the \-Error \-L\-E\-D. \end{DoxyCompactList}\item 
+\#define \hyperlink{remotePanel_8ino_a9a8dc8e6e75e845a90d783b02b6be855}{\-\_\-pulse\-\_\-halfwidth\-\_\-}~100
+\begin{DoxyCompactList}\small\item\em \-Define the 1/2 period of the pulse used to flash the \-L\-E\-D in the launch button. \end{DoxyCompactList}\item 
+\#define \hyperlink{remotePanel_8ino_a6b982ea9a4c912acbfd98bbd5072e258}{\-\_\-zigbee\-\_\-timeout\-\_\-}~1000
+\begin{DoxyCompactList}\small\item\em \-Define the timeout for the zigbee communications. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+boolean \hyperlink{remotePanel_8ino_a7c723c2671b19e432fe7591335b10841}{is\-Arm\-Switch\-Off} ()
+\begin{DoxyCompactList}\small\item\em \-Returns the \-On/\-Off state of the arm switch. \end{DoxyCompactList}\item 
+boolean \hyperlink{remotePanel_8ino_afb88fc2a270307376ca0ed8fba1ac7fa}{is\-Launch\-Button\-Off} ()
+\begin{DoxyCompactList}\small\item\em \-Returns the \-On/\-Off state of the launch button. \end{DoxyCompactList}\item 
+void \hyperlink{remotePanel_8ino_ae471e487c9a5e4c5fa1ce5533d49a25a}{set\-Arm\-Switch\-Led\-State} (boolean state)
+\begin{DoxyCompactList}\small\item\em \-Supplies power to the \-Arm \-Switch and therefore supplies power to both the switch and the \-L\-E\-D. \end{DoxyCompactList}\item 
+void \hyperlink{remotePanel_8ino_a0d3d1c5ed13354526829e2f48e95ec10}{set\-Launch\-Button\-Led\-State} (boolean state)
+\begin{DoxyCompactList}\small\item\em \-Turns the \-Launch button \-L\-E\-D on or off. \end{DoxyCompactList}\item 
+void \hyperlink{remotePanel_8ino_aa52415de65bdd171ce3eefcf2439d5bb}{read\-Zigbee} ()
+\begin{DoxyCompactList}\small\item\em \-Checks if there is data waiting in the \-Zigbee. \end{DoxyCompactList}\item 
+void \hyperlink{remotePanel_8ino_a9ad71d5a59d49ba8ccdb3d533e9324d1}{write\-Zigbee\-Master} ()
+\begin{DoxyCompactList}\small\item\em \-Checks the current state of the remote controller swiches, updates the data appropriate for the \-Remote \-Controller and sends a data packet to the \-Master \-Controller via \-Zigbee. \end{DoxyCompactList}\item 
+void \hyperlink{remotePanel_8ino_a6a7a25d5c6ef2271b21f7f801484bd5e}{report\-Error} ()
+\begin{DoxyCompactList}\small\item\em \-Toggles the on/off state of the error \-L\-E\-D to alert the user of an error. \end{DoxyCompactList}\item 
+void \hyperlink{remotePanel_8ino_a0e5ef5e02f999a751b31aeb3ec0729b0}{blink\-Launch\-Led} ()
+\begin{DoxyCompactList}\small\item\em \-Toggles the on/off state of the \-Launch \-L\-E\-D bit. \end{DoxyCompactList}\item 
+void \hyperlink{remotePanel_8ino_a0d9f4635fcc1f60128d2c92c51afc234}{report\-No\-Error} ()
+\begin{DoxyCompactList}\small\item\em \-Sets the error \-L\-E\-D to on to alert the user of an error. \end{DoxyCompactList}\item 
+void \hyperlink{remotePanel_8ino_a875972e5579573df843bbc6cab825821}{read\-Panel} ()
+\begin{DoxyCompactList}\small\item\em \-Reads all switch states from the \-Remote \-Panel, updates the data (\-Launch\-Data\-Packet instance), sends the data over \-Zigbee, and checks for any data waiting on the \-Zigbee and reads the data into the \-Launch\-Data\-Packet instance. \end{DoxyCompactList}\item 
+void \hyperlink{remotePanel_8ino_a4fc01d736fe50cf5b977f755b675f11d}{setup} ()
+\begin{DoxyCompactList}\small\item\em \-Arduino 'setup' function. \end{DoxyCompactList}\item 
+void \hyperlink{remotePanel_8ino_afe461d27b9c48d5921c00d521181f12f}{loop} ()
+\begin{DoxyCompactList}\small\item\em \-Arduino 'loop' function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Variables}
+\begin{DoxyCompactItemize}
+\item 
+boolean \hyperlink{remotePanel_8ino_a5583bd11885b1c22517a2478981867ca}{pulse} = \-F\-A\-L\-S\-E
+\begin{DoxyCompactList}\small\item\em \-Track the on/off state of the launch button \-L\-E\-D when the \-L\-E\-D is flashing. \end{DoxyCompactList}\item 
+long \hyperlink{remotePanel_8ino_af8d9d76d18b6aee4b209d4f3b9f2d8d3}{time\-Since\-Last\-Pulse} = 0
+\begin{DoxyCompactList}\small\item\em \-Time since the last toggle of the \-L\-E\-D on/off status. \end{DoxyCompactList}\item 
+long \hyperlink{remotePanel_8ino_a925c32c87cdf25a3c9fde672e4dffec6}{time\-Since\-Last\-Signal} = 0
+\begin{DoxyCompactList}\small\item\em \-Time since the last good \-Zigbee communication with the master panel. \end{DoxyCompactList}\item 
+\-X\-Bee \hyperlink{remotePanel_8ino_a18bbd7dece9ef587254b08710426fd17}{xbee} = \-X\-Bee()
+\begin{DoxyCompactList}\small\item\em \-Instance of the \-Zigbee \-Class. \end{DoxyCompactList}\item 
+\-Launch\-Data\-Packet \hyperlink{remotePanel_8ino_a2581ee7316bbd0b2c1f26d7892d9383b}{data} = \-Launch\-Data\-Packet(\hyperlink{remotePanel_8ino_a18bbd7dece9ef587254b08710426fd17}{xbee})
+\begin{DoxyCompactList}\small\item\em \-Instance of the \-Launch\-Data\-Packet \-Class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Sketch for the \-Compressed \-Air \-Rocket \-Remote \-Panel. \-This sketch monitors the switches and buttons in the \-Remote \-Panel and communicates with the \-Master \-Panel using \-Zigbee \begin{DoxySeeAlso}{\-See also}
+\-Launch\-Pad\-Packet.\-h 
+\end{DoxySeeAlso}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{remotePanel_8ino_abeac387ee946b831a2d5f3ea8efa2cd6}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!\-\_\-\-Arm\-Led\-Bit\-\_\-@{\-\_\-\-Arm\-Led\-Bit\-\_\-}}
+\index{\-\_\-\-Arm\-Led\-Bit\-\_\-@{\-\_\-\-Arm\-Led\-Bit\-\_\-}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{\-\_\-\-Arm\-Led\-Bit\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-Arm\-Led\-Bit\-\_\-}~2}}\label{remotePanel_8ino_abeac387ee946b831a2d5f3ea8efa2cd6}
+
+
+\-Define the \-Port \-Bit \# for the \-Arm \-Switch \-L\-E\-D. 
+
+\-In \-Port \-D, the \-Port \-Bit \# is equal to the \-Digital \-Pin \#. \-In \-Port \-B, the \-Port \-Bit \# is equal to the \-Digital \-Pin \# minus 8. \hypertarget{remotePanel_8ino_a56e638ac4be5080bc22d2b94fb645c7e}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!\-\_\-\-Arm\-Led\-Bit\-Mode\-\_\-@{\-\_\-\-Arm\-Led\-Bit\-Mode\-\_\-}}
+\index{\-\_\-\-Arm\-Led\-Bit\-Mode\-\_\-@{\-\_\-\-Arm\-Led\-Bit\-Mode\-\_\-}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{\-\_\-\-Arm\-Led\-Bit\-Mode\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-Arm\-Led\-Bit\-Mode\-\_\-}~2}}\label{remotePanel_8ino_a56e638ac4be5080bc22d2b94fb645c7e}
+
+
+\-Define the \-Digital \-Pin \# for the \-Arm \-Switch \-L\-E\-D. 
+
+\-Master controller has an \-Arm \-Toggle switch with build-\/in \-L\-E\-D. \-This output does not control the \-L\-E\-D. \-Instead it supplies power to the \-L\-E\-D and switch combo. \-L\-E\-D will not turn on without power. \-L\-E\-D will turn on when it has power and the toggle switch is on. \hypertarget{remotePanel_8ino_ace3d99afc4b0ef3e41ab1238949d7f07}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!\-\_\-\-Arm\-Led\-Port\-\_\-@{\-\_\-\-Arm\-Led\-Port\-\_\-}}
+\index{\-\_\-\-Arm\-Led\-Port\-\_\-@{\-\_\-\-Arm\-Led\-Port\-\_\-}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{\-\_\-\-Arm\-Led\-Port\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-Arm\-Led\-Port\-\_\-}~\-P\-O\-R\-T\-D}}\label{remotePanel_8ino_ace3d99afc4b0ef3e41ab1238949d7f07}
+
+
+\-Define the \-Digital \-Port the \-Arm \-Switch \-L\-E\-D is connected to. 
+
+\hypertarget{remotePanel_8ino_aceced00e366c0b2de5b1f6a45e857af2}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!\-\_\-\-Arm\-Switch\-Bit\-\_\-@{\-\_\-\-Arm\-Switch\-Bit\-\_\-}}
+\index{\-\_\-\-Arm\-Switch\-Bit\-\_\-@{\-\_\-\-Arm\-Switch\-Bit\-\_\-}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{\-\_\-\-Arm\-Switch\-Bit\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-Arm\-Switch\-Bit\-\_\-}~4}}\label{remotePanel_8ino_aceced00e366c0b2de5b1f6a45e857af2}
+
+
+\-Define the \-Port \-Bit \# for the \-Arm \-Switch \-In \-Port \-D, the \-Port \-Bit \# is equal to the \-Digital \-Pin \#. 
+
+\-In \-Port \-B, the \-Port \-Bit \# is equal to the \-Digital \-Pin \# minus 8. \hypertarget{remotePanel_8ino_a5f2f9a4205afa54acd635b5699e141b5}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!\-\_\-\-Arm\-Switch\-Bit\-Mode\-\_\-@{\-\_\-\-Arm\-Switch\-Bit\-Mode\-\_\-}}
+\index{\-\_\-\-Arm\-Switch\-Bit\-Mode\-\_\-@{\-\_\-\-Arm\-Switch\-Bit\-Mode\-\_\-}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{\-\_\-\-Arm\-Switch\-Bit\-Mode\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-Arm\-Switch\-Bit\-Mode\-\_\-}~4}}\label{remotePanel_8ino_a5f2f9a4205afa54acd635b5699e141b5}
+
+
+\-Define the \-Digital \-Input \# for the \-Arm \-Switch. 
+
+\-This input monitors the \-Master controller \-Arm \-Toggle switch (\-D\-P\-S\-T). \hypertarget{remotePanel_8ino_a0e6aa72e91800dc38319f04a2c81f073}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!\-\_\-\-Arm\-Switch\-Port\-\_\-@{\-\_\-\-Arm\-Switch\-Port\-\_\-}}
+\index{\-\_\-\-Arm\-Switch\-Port\-\_\-@{\-\_\-\-Arm\-Switch\-Port\-\_\-}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{\-\_\-\-Arm\-Switch\-Port\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-Arm\-Switch\-Port\-\_\-}~\-P\-O\-R\-T\-D}}\label{remotePanel_8ino_a0e6aa72e91800dc38319f04a2c81f073}
+
+
+\-Define the \-Digital \-Port the \-Arm \-Switch is connected to. 
+
+\hypertarget{remotePanel_8ino_a5504a284db73f254a1d5871844f6987c}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!\-\_\-\-Error\-Led\-Bit\-\_\-@{\-\_\-\-Error\-Led\-Bit\-\_\-}}
+\index{\-\_\-\-Error\-Led\-Bit\-\_\-@{\-\_\-\-Error\-Led\-Bit\-\_\-}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{\-\_\-\-Error\-Led\-Bit\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-Error\-Led\-Bit\-\_\-}~6}}\label{remotePanel_8ino_a5504a284db73f254a1d5871844f6987c}
+
+
+\-Define the \-Port \-Bit \# for the \-Error \-L\-E\-D. 
+
+\-In \-Port \-D, the \-Port \-Bit \# is equal to the \-Digital \-Pin \#. \-In \-Port \-B, the \-Port \-Bit \# is equal to the \-Digital \-Pin \# minus 8. \hypertarget{remotePanel_8ino_afff5f53ef0f1c562a5dce2243aef6c53}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!\-\_\-\-Error\-Led\-Bit\-Mode\-\_\-@{\-\_\-\-Error\-Led\-Bit\-Mode\-\_\-}}
+\index{\-\_\-\-Error\-Led\-Bit\-Mode\-\_\-@{\-\_\-\-Error\-Led\-Bit\-Mode\-\_\-}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{\-\_\-\-Error\-Led\-Bit\-Mode\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-Error\-Led\-Bit\-Mode\-\_\-}~6}}\label{remotePanel_8ino_afff5f53ef0f1c562a5dce2243aef6c53}
+
+
+\-Define the \-Digital \-Input \# for the \-Error \-L\-E\-D. 
+
+\hypertarget{remotePanel_8ino_affac57d4321e3e0a2ffd81bce3d8ac87}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!\-\_\-\-Error\-Led\-Port\-\_\-@{\-\_\-\-Error\-Led\-Port\-\_\-}}
+\index{\-\_\-\-Error\-Led\-Port\-\_\-@{\-\_\-\-Error\-Led\-Port\-\_\-}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{\-\_\-\-Error\-Led\-Port\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-Error\-Led\-Port\-\_\-}~\-P\-O\-R\-T\-D}}\label{remotePanel_8ino_affac57d4321e3e0a2ffd81bce3d8ac87}
+
+
+\-Define the \-Digital \-Port the \-Error \-L\-E\-D is connected to. 
+
+\hypertarget{remotePanel_8ino_a7790df90c3031037ccd5b55d84e32858}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!\-\_\-\-Launch\-Button\-Bit\-\_\-@{\-\_\-\-Launch\-Button\-Bit\-\_\-}}
+\index{\-\_\-\-Launch\-Button\-Bit\-\_\-@{\-\_\-\-Launch\-Button\-Bit\-\_\-}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{\-\_\-\-Launch\-Button\-Bit\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-Launch\-Button\-Bit\-\_\-}~5}}\label{remotePanel_8ino_a7790df90c3031037ccd5b55d84e32858}
+
+
+\-Define the \-Port \-Bit \# for the \-Launch \-Button. 
+
+\-In \-Port \-D, the \-Port \-Bit \# is equal to the \-Digital \-Pin \#. \-In \-Port \-B, the \-Port \-Bit \# is equal to the \-Digital \-Pin \# minus 8. \hypertarget{remotePanel_8ino_adb250c5295e5075c2a2ba25ff9ea5f57}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!\-\_\-\-Launch\-Button\-Bit\-Mode\-\_\-@{\-\_\-\-Launch\-Button\-Bit\-Mode\-\_\-}}
+\index{\-\_\-\-Launch\-Button\-Bit\-Mode\-\_\-@{\-\_\-\-Launch\-Button\-Bit\-Mode\-\_\-}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{\-\_\-\-Launch\-Button\-Bit\-Mode\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-Launch\-Button\-Bit\-Mode\-\_\-}~5}}\label{remotePanel_8ino_adb250c5295e5075c2a2ba25ff9ea5f57}
+
+
+\-Define the \-Digital \-Input \# for the \-Launch \-Button. 
+
+\-Define the \-Digital \-Port the \-Launch \-Button is connected to. \hypertarget{remotePanel_8ino_aa27235b645c2cb89f868e08287f54dc6}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!\-\_\-\-Launch\-Button\-Port\-\_\-@{\-\_\-\-Launch\-Button\-Port\-\_\-}}
+\index{\-\_\-\-Launch\-Button\-Port\-\_\-@{\-\_\-\-Launch\-Button\-Port\-\_\-}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{\-\_\-\-Launch\-Button\-Port\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-Launch\-Button\-Port\-\_\-}~\-P\-O\-R\-T\-D}}\label{remotePanel_8ino_aa27235b645c2cb89f868e08287f54dc6}
+\hypertarget{remotePanel_8ino_a556344e1154b17e67f5c8a40e022be29}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!\-\_\-\-Launch\-Led\-Bit\-\_\-@{\-\_\-\-Launch\-Led\-Bit\-\_\-}}
+\index{\-\_\-\-Launch\-Led\-Bit\-\_\-@{\-\_\-\-Launch\-Led\-Bit\-\_\-}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{\-\_\-\-Launch\-Led\-Bit\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-Launch\-Led\-Bit\-\_\-}~3}}\label{remotePanel_8ino_a556344e1154b17e67f5c8a40e022be29}
+
+
+\-Define the \-Port \-Bit \# for the \-Launch \-Button \-L\-E\-D. 
+
+\-In \-Port \-D, the \-Port \-Bit \# is equal to the \-Digital \-Pin \#. \-In \-Port \-B, the \-Port \-Bit \# is equal to the \-Digital \-Pin \# minus 8. \hypertarget{remotePanel_8ino_a834965132d8d0a67717adec607303b13}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!\-\_\-\-Launch\-Led\-Bit\-Mode\-\_\-@{\-\_\-\-Launch\-Led\-Bit\-Mode\-\_\-}}
+\index{\-\_\-\-Launch\-Led\-Bit\-Mode\-\_\-@{\-\_\-\-Launch\-Led\-Bit\-Mode\-\_\-}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{\-\_\-\-Launch\-Led\-Bit\-Mode\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-Launch\-Led\-Bit\-Mode\-\_\-}~3}}\label{remotePanel_8ino_a834965132d8d0a67717adec607303b13}
+
+
+\-Define the \-Digital \-Output \# for the \-Launch \-Button \-L\-E\-D. 
+
+\-Master controller has a \-Launch \-Button with build in \-L\-E\-D. \-This pin turns the built in \-L\-E\-D on and off. \-The button does not control the \-L\-E\-D. \hypertarget{remotePanel_8ino_a2ebaf073a30ca8e1bd042ab46eb35cb4}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!\-\_\-\-Launch\-Led\-Port\-\_\-@{\-\_\-\-Launch\-Led\-Port\-\_\-}}
+\index{\-\_\-\-Launch\-Led\-Port\-\_\-@{\-\_\-\-Launch\-Led\-Port\-\_\-}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{\-\_\-\-Launch\-Led\-Port\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-Launch\-Led\-Port\-\_\-}~\-P\-O\-R\-T\-D}}\label{remotePanel_8ino_a2ebaf073a30ca8e1bd042ab46eb35cb4}
+
+
+\-Define the \-Digital \-Port the \-Launch \-Button \-L\-E\-D is connected to. 
+
+\hypertarget{remotePanel_8ino_a9a8dc8e6e75e845a90d783b02b6be855}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!\-\_\-pulse\-\_\-halfwidth\-\_\-@{\-\_\-pulse\-\_\-halfwidth\-\_\-}}
+\index{\-\_\-pulse\-\_\-halfwidth\-\_\-@{\-\_\-pulse\-\_\-halfwidth\-\_\-}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{\-\_\-pulse\-\_\-halfwidth\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-pulse\-\_\-halfwidth\-\_\-}~100}}\label{remotePanel_8ino_a9a8dc8e6e75e845a90d783b02b6be855}
+
+
+\-Define the 1/2 period of the pulse used to flash the \-L\-E\-D in the launch button. 
+
+\hypertarget{remotePanel_8ino_a6b982ea9a4c912acbfd98bbd5072e258}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!\-\_\-zigbee\-\_\-timeout\-\_\-@{\-\_\-zigbee\-\_\-timeout\-\_\-}}
+\index{\-\_\-zigbee\-\_\-timeout\-\_\-@{\-\_\-zigbee\-\_\-timeout\-\_\-}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{\-\_\-zigbee\-\_\-timeout\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-zigbee\-\_\-timeout\-\_\-}~1000}}\label{remotePanel_8ino_a6b982ea9a4c912acbfd98bbd5072e258}
+
+
+\-Define the timeout for the zigbee communications. 
+
+\-Error occurs if the time since the last communicaitons exceeds the timeout. 
+
+\subsection{\-Function \-Documentation}
+\hypertarget{remotePanel_8ino_a0e5ef5e02f999a751b31aeb3ec0729b0}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!blink\-Launch\-Led@{blink\-Launch\-Led}}
+\index{blink\-Launch\-Led@{blink\-Launch\-Led}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{blink\-Launch\-Led}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf blink\-Launch\-Led} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{remotePanel_8ino_a0e5ef5e02f999a751b31aeb3ec0729b0}
+
+
+\-Toggles the on/off state of the \-Launch \-L\-E\-D bit. 
+
+\hypertarget{remotePanel_8ino_a7c723c2671b19e432fe7591335b10841}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!is\-Arm\-Switch\-Off@{is\-Arm\-Switch\-Off}}
+\index{is\-Arm\-Switch\-Off@{is\-Arm\-Switch\-Off}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{is\-Arm\-Switch\-Off}]{\setlength{\rightskip}{0pt plus 5cm}boolean {\bf is\-Arm\-Switch\-Off} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{remotePanel_8ino_a7c723c2671b19e432fe7591335b10841}
+
+
+\-Returns the \-On/\-Off state of the arm switch. 
+
+\begin{DoxyReturn}{\-Returns}
+boolean -\/ \-T\-R\-U\-E -\/ \-Arm switch is off, \-F\-A\-L\-S\-E -\/ \-Arm switch is on. 
+\end{DoxyReturn}
+\hypertarget{remotePanel_8ino_afb88fc2a270307376ca0ed8fba1ac7fa}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!is\-Launch\-Button\-Off@{is\-Launch\-Button\-Off}}
+\index{is\-Launch\-Button\-Off@{is\-Launch\-Button\-Off}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{is\-Launch\-Button\-Off}]{\setlength{\rightskip}{0pt plus 5cm}boolean {\bf is\-Launch\-Button\-Off} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{remotePanel_8ino_afb88fc2a270307376ca0ed8fba1ac7fa}
+
+
+\-Returns the \-On/\-Off state of the launch button. 
+
+\begin{DoxyReturn}{\-Returns}
+boolean -\/ \-T\-R\-U\-E -\/ \-Launch button is off, \-F\-A\-L\-S\-E -\/ \-Launch button is on. 
+\end{DoxyReturn}
+\hypertarget{remotePanel_8ino_afe461d27b9c48d5921c00d521181f12f}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!loop@{loop}}
+\index{loop@{loop}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{loop}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf loop} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{remotePanel_8ino_afe461d27b9c48d5921c00d521181f12f}
+
+
+\-Arduino 'loop' function. 
+
+\-The 'loop' function is excecuted over and over after the 'setup' function finishes executing. \par
+ \-It will call the read\-Panel function in an infinite loop. \hypertarget{remotePanel_8ino_a875972e5579573df843bbc6cab825821}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!read\-Panel@{read\-Panel}}
+\index{read\-Panel@{read\-Panel}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{read\-Panel}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf read\-Panel} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{remotePanel_8ino_a875972e5579573df843bbc6cab825821}
+
+
+\-Reads all switch states from the \-Remote \-Panel, updates the data (\-Launch\-Data\-Packet instance), sends the data over \-Zigbee, and checks for any data waiting on the \-Zigbee and reads the data into the \-Launch\-Data\-Packet instance. 
+
+\hypertarget{remotePanel_8ino_aa52415de65bdd171ce3eefcf2439d5bb}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!read\-Zigbee@{read\-Zigbee}}
+\index{read\-Zigbee@{read\-Zigbee}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{read\-Zigbee}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf read\-Zigbee} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{remotePanel_8ino_aa52415de65bdd171ce3eefcf2439d5bb}
+
+
+\-Checks if there is data waiting in the \-Zigbee. 
+
+\-If data is present, it reads the data and stores it in class variables and updates the \-L\-C\-D display acording to the data content. \hypertarget{remotePanel_8ino_a6a7a25d5c6ef2271b21f7f801484bd5e}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!report\-Error@{report\-Error}}
+\index{report\-Error@{report\-Error}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{report\-Error}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf report\-Error} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{remotePanel_8ino_a6a7a25d5c6ef2271b21f7f801484bd5e}
+
+
+\-Toggles the on/off state of the error \-L\-E\-D to alert the user of an error. 
+
+\hypertarget{remotePanel_8ino_a0d9f4635fcc1f60128d2c92c51afc234}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!report\-No\-Error@{report\-No\-Error}}
+\index{report\-No\-Error@{report\-No\-Error}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{report\-No\-Error}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf report\-No\-Error} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{remotePanel_8ino_a0d9f4635fcc1f60128d2c92c51afc234}
+
+
+\-Sets the error \-L\-E\-D to on to alert the user of an error. 
+
+\hypertarget{remotePanel_8ino_ae471e487c9a5e4c5fa1ce5533d49a25a}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!set\-Arm\-Switch\-Led\-State@{set\-Arm\-Switch\-Led\-State}}
+\index{set\-Arm\-Switch\-Led\-State@{set\-Arm\-Switch\-Led\-State}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{set\-Arm\-Switch\-Led\-State}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf set\-Arm\-Switch\-Led\-State} (
+\begin{DoxyParamCaption}
+\item[{boolean}]{state}
+\end{DoxyParamCaption}
+)}}\label{remotePanel_8ino_ae471e487c9a5e4c5fa1ce5533d49a25a}
+
+
+\-Supplies power to the \-Arm \-Switch and therefore supplies power to both the switch and the \-L\-E\-D. 
+
+\-The \-L\-E\-D dues not light up unless it has both power and the switch is in the on position.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em state} & -\/ (int) 0 = turn off. all other values = turn on. \\
+\hline
+\end{DoxyParams}
+\hypertarget{remotePanel_8ino_a0d3d1c5ed13354526829e2f48e95ec10}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!set\-Launch\-Button\-Led\-State@{set\-Launch\-Button\-Led\-State}}
+\index{set\-Launch\-Button\-Led\-State@{set\-Launch\-Button\-Led\-State}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{set\-Launch\-Button\-Led\-State}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf set\-Launch\-Button\-Led\-State} (
+\begin{DoxyParamCaption}
+\item[{boolean}]{state}
+\end{DoxyParamCaption}
+)}}\label{remotePanel_8ino_a0d3d1c5ed13354526829e2f48e95ec10}
+
+
+\-Turns the \-Launch button \-L\-E\-D on or off. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em state} & -\/ (int) 0 = turn off. all other values = turn on. \\
+\hline
+\end{DoxyParams}
+\hypertarget{remotePanel_8ino_a4fc01d736fe50cf5b977f755b675f11d}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!setup@{setup}}
+\index{setup@{setup}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{setup}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf setup} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{remotePanel_8ino_a4fc01d736fe50cf5b977f755b675f11d}
+
+
+\-Arduino 'setup' function. 
+
+\-The 'setup' function is excecuted only once each time the \-Atmel microcontroller is powered up and it executes after the arduino boot loader finishes executing. \par
+ \-It will initialize the digital \-I/\-O pins, the \-L\-C\-D screen, the serial port, and the \-Zigbee. \hypertarget{remotePanel_8ino_a9ad71d5a59d49ba8ccdb3d533e9324d1}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!write\-Zigbee\-Master@{write\-Zigbee\-Master}}
+\index{write\-Zigbee\-Master@{write\-Zigbee\-Master}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{write\-Zigbee\-Master}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf write\-Zigbee\-Master} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{remotePanel_8ino_a9ad71d5a59d49ba8ccdb3d533e9324d1}
+
+
+\-Checks the current state of the remote controller swiches, updates the data appropriate for the \-Remote \-Controller and sends a data packet to the \-Master \-Controller via \-Zigbee. 
+
+\-All variables are stored in the class instance. 
+
+\subsection{\-Variable \-Documentation}
+\hypertarget{remotePanel_8ino_a2581ee7316bbd0b2c1f26d7892d9383b}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!data@{data}}
+\index{data@{data}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}\-Launch\-Data\-Packet {\bf data} = \-Launch\-Data\-Packet({\bf xbee})}}\label{remotePanel_8ino_a2581ee7316bbd0b2c1f26d7892d9383b}
+
+
+\-Instance of the \-Launch\-Data\-Packet \-Class. 
+
+\-Create an instance of the \-Launch\-Data\-Packet \-Class. \-Only one instance created. \-This class decyphers all data being passed between the \-Master \-Panel, the \-Remote \-Panel, and the \-Launch \-Pad. \-The single instance of the \-Zigbee class is passed to the \-Launch\-Data\-Packet so the \-Master \-Panel can begin communicate with the \-Remote \-Panel and the \-Launch \-Pad. \hypertarget{remotePanel_8ino_a5583bd11885b1c22517a2478981867ca}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!pulse@{pulse}}
+\index{pulse@{pulse}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{pulse}]{\setlength{\rightskip}{0pt plus 5cm}boolean {\bf pulse} = \-F\-A\-L\-S\-E}}\label{remotePanel_8ino_a5583bd11885b1c22517a2478981867ca}
+
+
+\-Track the on/off state of the launch button \-L\-E\-D when the \-L\-E\-D is flashing. 
+
+\hypertarget{remotePanel_8ino_af8d9d76d18b6aee4b209d4f3b9f2d8d3}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!time\-Since\-Last\-Pulse@{time\-Since\-Last\-Pulse}}
+\index{time\-Since\-Last\-Pulse@{time\-Since\-Last\-Pulse}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{time\-Since\-Last\-Pulse}]{\setlength{\rightskip}{0pt plus 5cm}long {\bf time\-Since\-Last\-Pulse} = 0}}\label{remotePanel_8ino_af8d9d76d18b6aee4b209d4f3b9f2d8d3}
+
+
+\-Time since the last toggle of the \-L\-E\-D on/off status. 
+
+\-Used to control the flashing of the \-L\-E\-D. \hypertarget{remotePanel_8ino_a925c32c87cdf25a3c9fde672e4dffec6}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!time\-Since\-Last\-Signal@{time\-Since\-Last\-Signal}}
+\index{time\-Since\-Last\-Signal@{time\-Since\-Last\-Signal}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{time\-Since\-Last\-Signal}]{\setlength{\rightskip}{0pt plus 5cm}long {\bf time\-Since\-Last\-Signal} = 0}}\label{remotePanel_8ino_a925c32c87cdf25a3c9fde672e4dffec6}
+
+
+\-Time since the last good \-Zigbee communication with the master panel. 
+
+\-Used to monitor a timeout error. \hypertarget{remotePanel_8ino_a18bbd7dece9ef587254b08710426fd17}{\index{remote\-Panel.\-ino@{remote\-Panel.\-ino}!xbee@{xbee}}
+\index{xbee@{xbee}!remotePanel.ino@{remote\-Panel.\-ino}}
+\subsubsection[{xbee}]{\setlength{\rightskip}{0pt plus 5cm}\-X\-Bee {\bf xbee} = \-X\-Bee()}}\label{remotePanel_8ino_a18bbd7dece9ef587254b08710426fd17}
+
+
+\-Instance of the \-Zigbee \-Class. 
+
+\-Only one instance created. \-It is used to control/perform handshakes and other communications with the other \-Zigbee devices in the \-Zigbee wireless network. 
